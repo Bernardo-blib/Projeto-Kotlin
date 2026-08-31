@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Meu Curso</string>
+    <string name="nome_instituicao"> Instituto Tech</string>
+    <string name="nome_curso"> Analise e Desenvolvimento de Sistemas</string>
+    <string name="descricao_curta">Formação prática em desenvolvimento de software</string>
+    <string name="btn_conheca">Cocheca o curso</string>
+    <string name="btn_disciplinas">Disciplinas</string>
+    
+    
+    <string name="duracao">2 anos(4 semetres)</string>
+    <string name="modalidade">Presencial e Online</string>
+    <string name="descricao_longa">O curso de Análise e Desenvolvimento de Sistemas prepara o aluno para atuar em todo o ciclo de desenvolvimento de software, do levantamento de requisitos à entrega final. Ao longo da formação, o estudante desenvolve competências em lógica de programação, banco de dados, engenharia de software, desenvolvimento web e mobile, além de inteligência artificial. O curso também trabalha metodologias ágeis, trabalho em equipe e resolução de problemas, preparando o egresso para o mercado de tecnologia, seja em empresas de software, startups ou como desenvolvedor autônomo.</string>
+    <string name="btn_voltar">Voltar</string>
+</resources>
