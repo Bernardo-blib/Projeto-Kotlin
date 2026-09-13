@@ -18,56 +18,74 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/disciplinaProgramacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:padding="16dp"
-            android:background="#EEEEEE"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="16sp"
             android:text="Programação" />
 
         <TextView
+            android:id="@+id/disciplinaBancoDados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:padding="16dp"
-            android:background="#EEEEEE"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="16sp"
             android:text="Banco de Dados" />
 
         <TextView
+            android:id="@+id/disciplinaEngSoftware"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:padding="16dp"
-            android:background="#EEEEEE"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="16sp"
             android:text="Engenharia de Software" />
 
         <TextView
+            android:id="@+id/disciplinaDesenvWeb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:padding="16dp"
-            android:background="#EEEEEE"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="16sp"
             android:text="Desenvolvimento Web" />
 
         <TextView
+            android:id="@+id/disciplinaDesenvMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:padding="16dp"
-            android:background="#EEEEEE"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="16sp"
             android:text="Desenvolvimento Mobile" />
 
         <TextView
+            android:id="@+id/disciplinaIA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:padding="16dp"
-            android:background="#EEEEEE"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="16sp"
             android:text="Inteligência Artificial" />
 
@@ -76,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/btn_voltar" />
+            android:text="Voltar" />
 
     </LinearLayout>
 </ScrollView>
