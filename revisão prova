@@ -1,0 +1,276 @@
+abstract class Conta(
+    val titular: String,
+    val numero: Int
+) {
+
+    protected var saldo: Double = 0.0
+
+    private val historico = mutableListOf<String>()
+    
+    fun consultarSaldo(): Double {
+        return saldo
+    }
+    
+    fun exibirDados() {
+        println("Cliente: $titular")
+        println("Conta: $numero")
+        println("Saldo Atual: R$ ${"%.2f".format(saldo)}")
+    }
+    
+    fun depositar(valor: Double) {
+
+        if (valor <= 0) {
+            println("Depósito inválido!")
+            historico.add("Tentativa de depósito inválido de R$ $valor.")
+            return
+        }
+
+        saldo += valor
+
+        println("Depósito realizado com sucesso!")
+        historico.add("Depósito de R$ ${"%.2f".format(valor)} realizado.")
+    }
+    
+    open fun sacar(valor: Double): Boolean {
+
+        if (valor <= 0) {
+            println("Valor de saque inválido!")
+            historico.add("Tentativa de saque inválido de R$ $valor.")
+            return false
+        }
+
+        if (valor > saldo) {
+            println("Saldo insuficiente para realizar esta operação!")
+            historico.add(
+                "Saque de R$ ${"%.2f".format(valor)} recusado por saldo insuficiente."
+            )
+            return false
+        }
+
+        saldo -= valor
+
+        println("Saque realizado com sucesso!")
+        historico.add("Saque de R$ ${"%.2f".format(valor)} realizado.")
+
+        return true
+    }
+
+    abstract fun aplicarTaxa()
+    
+    abstract fun aplicarRendimento()
+    
+    protected fun registrarOperacao(descricao: String) {
+        historico.add(descricao)
+    }
+    fun exibirHistorico() {
+
+        println()
+        println("====================================")
+        println("HISTÓRICO DE OPERAÇÕES")
+        println("====================================")
+
+        if (historico.isEmpty()) {
+            println("Nenhuma operação realizada.")
+        } else {
+            historico.forEach {
+                println(it)
+            }
+        }
+    }
+    
+    fun transferir(valor: Double, destino: Conta): Boolean {
+
+        if (valor <= 0) {
+            println("Valor de transferência inválido!")
+
+            registrarOperacao(
+                "Tentativa de transferência inválida de R$ $valor."
+            )
+
+            return false
+        }
+
+        if (valor > saldo) {
+            println("Saldo insuficiente para realizar a transferência!")
+
+            registrarOperacao(
+                "Transferência de R$ ${"%.2f".format(valor)} recusada por saldo insuficiente."
+            )
+
+            return false
+        }
+
+        saldo -= valor
+        destino.saldo += valor
+
+        registrarOperacao(
+            "Transferência de R$ ${"%.2f".format(valor)} enviada para a conta ${destino.numero}."
+        )
+
+        destino.registrarOperacao(
+            "Transferência de R$ ${"%.2f".format(valor)} recebida da conta $numero."
+        )
+
+        println("Transferência realizada com sucesso!")
+
+        return true
+    }
+}
+
+class ContaCorrente(
+    titular: String,
+    numero: Int
+) : Conta(titular, numero) {
+    
+    override fun aplicarTaxa() {
+
+        val taxa = 30.0
+
+        if (saldo >= taxa) {
+            saldo -= taxa
+
+            println("Aplicando taxa mensal...")
+            println("Novo saldo: R$ ${"%.2f".format(saldo)}")
+
+            registrarOperacao(
+                "Taxa mensal de R$ ${"%.2f".format(taxa)} aplicada."
+            )
+        } else {
+            println("Saldo insuficiente para cobrança da taxa mensal.")
+
+            registrarOperacao(
+                "Taxa mensal não aplicada por saldo insuficiente."
+            )
+        }
+    }
+    
+    override fun aplicarRendimento() {
+
+        val rendimento = saldo * 0.005
+
+        saldo += rendimento
+
+        println(
+            "Rendimento aplicado: R$ ${"%.2f".format(rendimento)}"
+        )
+
+        registrarOperacao(
+            "Rendimento de R$ ${"%.2f".format(rendimento)} aplicado."
+        )
+    }
+}
+
+class ContaPoupanca(
+    titular: String,
+    numero: Int
+) : Conta(titular, numero) {
+
+    // Poupança não possui taxa mensal
+    override fun aplicarTaxa() {
+
+        println("Conta poupança não possui taxa mensal.")
+
+        registrarOperacao(
+            "Taxa mensal não aplicada (conta poupança)."
+        )
+    }
+    
+    override fun aplicarRendimento() {
+
+        val rendimento = saldo * 0.01
+
+        saldo += rendimento
+
+        println(
+            "Rendimento da poupança: R$ ${"%.2f".format(rendimento)}"
+        )
+
+        registrarOperacao(
+            "Rendimento de R$ ${"%.2f".format(rendimento)} aplicado."
+        )
+    }
+}
+
+fun main() {
+
+    println("====================================")
+    println("BANCO BYTEBANK EVOLUTION")
+    println("====================================")
+    println()
+
+    val contaMaria = ContaCorrente(
+        titular = "Maria Silva",
+        numero = 1001
+    )
+
+    val contaJoao = ContaPoupanca(
+        titular = "João Santos",
+        numero = 1002
+    )
+
+
+    println("====================================")
+    println("DADOS DA CONTA")
+    println("====================================")
+
+    contaMaria.depositar(3000.0)
+
+    contaMaria.exibirDados()
+
+    println()
+
+    contaMaria.sacar(200.0)
+
+    contaMaria.sacar(5000.0)
+
+    println()
+
+    contaMaria.aplicarTaxa()
+
+    println()
+
+    contaMaria.aplicarRendimento()
+
+    println()
+    println("====================================")
+    println("CONTA POUPANÇA")
+    println("====================================")
+
+    contaJoao.depositar(2000.0)
+
+    contaJoao.exibirDados()
+
+    println()
+
+    contaJoao.sacar(300.0)
+
+    contaJoao.aplicarTaxa()
+
+    contaJoao.aplicarRendimento()
+
+    println()
+    println("====================================")
+    println("TRANSFERÊNCIA")
+    println("====================================")
+
+    contaMaria.transferir(
+        valor = 100.0,
+        destino = contaJoao
+    )
+
+
+    println()
+    println("====================================")
+    println("SALDOS FINAIS")
+    println("====================================")
+
+    contaMaria.exibirDados()
+
+    println()
+
+    contaJoao.exibirDados()
+
+    contaMaria.exibirHistorico()
+  
+    contaJoao.exibirHistorico()
+}
